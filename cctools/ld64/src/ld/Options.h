@@ -176,6 +176,10 @@ public:
         // Returns true if a previous call to checkFileExists() succeeded.
         // Returns false if the file does not exist of checkFileExists() has never been called.
         bool missing() const { return modTime==0; }
+
+        // Serialize the file info as a command line argument that would be parsed as the same file
+        // info. Best effort if some attributes cannot be preserved through the round trip.
+        std::vector<std::string> lib_cli_argument() const;
 	};
 
 	struct ExtraSection {
@@ -475,6 +479,7 @@ public:
 	std::string					getSDKVersionStr() const;
 	std::string					getPlatformStr() const;
 	uint8_t						maxDefaultCommonAlign() const { return fMaxDefaultCommonAlign; }
+	bool						dumpNormalizedLibArgs() const { return fDumpNormalizedLibArgs; }
 
 	static uint32_t				parseVersionNumber32(const char*);
 
@@ -784,6 +789,7 @@ private:
 	uint8_t								fMaxDefaultCommonAlign;
 	FilePreference						fFilePreference;
 	bool								fForceTextBasedStub;
+	bool								fDumpNormalizedLibArgs;
 };
 
 
